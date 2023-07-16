@@ -2196,10 +2196,10 @@ _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL_SIMD
 template <class _Tp, class _Storage, class _ValueType>
 class __simd_reference {
   template <class, class>
-  friend class simd;
+  friend struct simd;
 
   template <class, class>
-  friend class simd_mask;
+  friend struct simd_mask;
 
   _Storage& __s_;
   size_t __idx_;
@@ -2348,7 +2348,7 @@ _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL_SIMD
 
 // Class template simd [parallel.simd.class]
 template <class _Tp, class _Abi = simd_abi::compatible<_Tp>>
-class simd;
+struct simd;
 
 template <class _Tp>
 using native_simd = simd<_Tp, simd_abi::native<_Tp>>;
@@ -2358,7 +2358,7 @@ using fixed_size_simd = simd<_Tp, simd_abi::fixed_size<_Np>>;
 
 // Class template simd_mask [parallel.simd.mask.class]
 template <class _Tp, class _Abi = simd_abi::compatible<_Tp>>
-class simd_mask;
+struct simd_mask;
 
 template <class _Tp>
 using native_simd_mask = simd_mask<_Tp, simd_abi::native<_Tp>>;
@@ -3273,13 +3273,13 @@ public:
 };
 
 template <class _Tp, class _Abi>
-class simd : public __simd_int_operators<simd<_Tp, _Abi>, __simd_traits<_Tp, _Abi>, is_integral_v<_Tp>> {
+struct simd : public __simd_int_operators<simd<_Tp, _Abi>, __simd_traits<_Tp, _Abi>, is_integral_v<_Tp>> {
   using _Impl    = __simd_traits<_Tp, _Abi>;
   using _Storage = typename _Impl::_Simd;
 
   _Storage __s_;
 
-  friend class simd_mask<_Tp, _Abi>;
+  friend struct simd_mask<_Tp, _Abi>;
   friend class __simd_int_operators<simd, _Impl, true>;
 
   template <class _MaskType, class _SimdType>
@@ -3444,13 +3444,13 @@ public:
 
 // Class template simd_mask [parallel.simd.mask.class]
 template <class _Tp, class _Abi>
-class simd_mask {
+struct simd_mask {
   using _Impl    = __mask_traits<_Tp, _Abi>;
   using _Storage = typename _Impl::_Mask;
 
   _Storage __s_;
 
-  friend class simd<_Tp, _Abi>;
+  friend struct simd<_Tp, _Abi>;
 
   template <class _MaskType, class _SimdType>
   friend class const_where_expression;
